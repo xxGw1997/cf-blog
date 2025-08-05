@@ -51,9 +51,9 @@ const Navs: React.FC<NavsProps> = ({ links }) => {
               href={link.hash}
               className={cn(
                 "flex w-full items-center justify-center px-5 py-3 transition",
-                "text-shadow-hover transition-all tracking-widest",
+                "nav-text-shadow-hover transition-all tracking-widest",
                 {
-                  "text-shadow":
+                  "nav-text-shadow":
                     activeSection === link.hash || pathname.includes(link.hash),
                 }
               )}
