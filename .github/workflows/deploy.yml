@@ -52,7 +52,7 @@ jobs:
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
 
-        run: pnpm dlx tsx scripts/deploy/index.ts
+        run: pnpm dlx tsx scripts/deploy.ts
 
       - name: 🧹🗑️ Post deployment cleanup
         run: |
