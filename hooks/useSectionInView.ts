@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import {
   SectionName,
   useActiveSectionContext,
-} from "@/components/active-section";
+} from "@/components/providers/active-section";
 
 export function useSectionInView(
   sectionName: SectionName,

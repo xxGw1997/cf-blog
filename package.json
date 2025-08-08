@@ -19,10 +19,16 @@
     "db:studio:remote": "drizzle-kit studio"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
     "@opennextjs/cloudflare": "^1.6.2",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-popover": "^1.1.14",
     "@radix-ui/react-separator": "^1.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.44.4",
     "hamburger-react": "^2.5.2",
     "jsonc-parser": "^3.3.1",
@@ -30,10 +36,14 @@
     "motion": "^12.23.12",
     "next": "15.3.5",
     "next-themes": "^0.4.6",
+    "radix-ui": "^1.4.2",
     "react": "^19.0.0",
     "react-awesome-reveal": "^4.3.1",
+    "react-day-picker": "^9.8.1",
     "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.3.1"
+    "react-hook-form": "^7.62.0",
+    "tailwind-merge": "^3.3.1",
+    "zod": "^4.0.15"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

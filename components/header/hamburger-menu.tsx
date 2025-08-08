@@ -7,9 +7,9 @@ import Link from "next/link";
 
 import { Link as LinkType } from "@/lib/links";
 import { cn } from "@/lib/utils";
-import { useActiveSectionContext } from "../active-section";
 import { ThemeSwitch } from "../theme-switch";
 import { Separator } from "../ui/separator";
+import { useActiveSectionContext } from "../providers/active-section";
 
 type HamburgerMenuProps = {
   links: LinkType[];

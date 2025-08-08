@@ -1,6 +1,8 @@
 import { Metadata } from "next";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
+import BackgroundLight from "@/components/background-light";
+import ActiveSectionContextProvider from "@/components/providers/active-section";
 import { Toolbar } from "@/components/header/toolbar";
 
 export const metadata: Metadata = {
@@ -11,13 +13,14 @@ export const metadata: Metadata = {
   description: "xxgw's blog",
 };
 
-const PostLayout = ({ children }: PropsWithChildren) => {
+const HomeLayout = ({ children }: PropsWithChildren) => {
   return (
-    <>
+    <ActiveSectionContextProvider>
+      <BackgroundLight />
       <Toolbar />
       {children}
-    </>
+    </ActiveSectionContextProvider>
   );
 };
 
-export default PostLayout;
+export default HomeLayout;

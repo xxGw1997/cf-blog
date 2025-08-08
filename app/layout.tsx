@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import BackgroundLight from "@/components/background-light";
-import Providers from "@/components/providers";
+import ThemeProvider from "@/components/providers/theme";
+import SiteLogo from "@/components/site-logo";
+import { ThemeSwitch } from "@/components/theme-switch";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,8 +33,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col relative`}
       >
-        <BackgroundLight />
-        <Providers>{children}</Providers>
+        <ThemeProvider>
+          <SiteLogo />
+          <ThemeSwitch className="fixed right-5 top-5 hidden md:flex" />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

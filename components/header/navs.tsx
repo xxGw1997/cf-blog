@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { Link as LinkType } from "@/lib/links";
 import { cn } from "@/lib/utils";
 
-import { useActiveSectionContext } from "../active-section";
+import { useActiveSectionContext } from "../providers/active-section";
 
 type NavsProps = {
   links: LinkType[];
