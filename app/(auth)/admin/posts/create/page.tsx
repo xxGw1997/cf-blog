@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, LoaderCircleIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import {
@@ -25,36 +26,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DayTimePicker } from "@/components/day-time-picker";
-
-const postFormSchema = z
-  .object({
-    title: z
-      .string()
-      .min(1, {
-        error: "请填写文章标题",
-      })
-      .max(30, {
-        error: "文章标题最多不能超过30个字符.",
-      }),
-    desc: z.string().min(1, { error: "请填写描述" }).max(50, {
-      error: "描述最多不能超过50个字符.",
-    }),
-    content: z.string().min(1, { error: "请填写文章内容" }),
-    isPublishNow: z.boolean(),
-    publishedAt: z.date().optional(),
-  })
-  .refine(
-    (data) => {
-      if (!data.isPublishNow && !data.publishedAt) {
-        return false;
-      }
-      return true;
-    },
-    {
-      error: "请选择发布时间",
-      path: ["publishedAt"],
-    }
-  );
+import { postFormSchema } from "@/types/schema";
+import { createPost } from "@/actions/post";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const formInitValue = {
   title: "",
@@ -65,6 +40,9 @@ const formInitValue = {
 };
 
 const CreatePostPage = () => {
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<z.infer<typeof postFormSchema>>({
     resolver: zodResolver(postFormSchema),
     defaultValues: {
@@ -72,8 +50,17 @@ const CreatePostPage = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof postFormSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof postFormSchema>) => {
+    setIsSubmitting(true);
+    try {
+      await createPost(values);
+      toast.success("提交成功");
+      router.push("/admin/posts");
+    } catch (error) {
+      toast.error("❌ 提交失败:");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -182,7 +169,16 @@ const CreatePostPage = () => {
             />
           )}
 
-          <Button type="submit">提交</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting && (
+              <LoaderCircleIcon
+                className="-ms-1 animate-spin"
+                size={16}
+                aria-hidden="true"
+              />
+            )}
+            提交
+          </Button>
         </form>
       </Form>
     </div>
