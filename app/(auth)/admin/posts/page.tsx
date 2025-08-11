@@ -73,7 +73,7 @@ const PostsPage = async () => {
                   </td>
                   <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                     <Link
-                      href={`/admin/posts/edit/${post.slug}`}
+                      href={`/admin/posts/edit?id=${post.id}`}
                       className="text-primary hover:text-primary/80 mr-4"
                     >
                       编辑

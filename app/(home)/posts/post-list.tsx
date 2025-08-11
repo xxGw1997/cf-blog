@@ -7,13 +7,9 @@ import { ArrowRight } from "lucide-react";
 
 import { BlurFade } from "@/components/magicui/blur-fade";
 
-type PostData = any
 
-interface PostListProps {
-  posts: Omit<PostData, "content">[];
-}
 
-export const PostList = ({ posts }: PostListProps) => {
+export const PostList = () => {
 
   
   return (
@@ -44,7 +40,6 @@ export const PostList = ({ posts }: PostListProps) => {
           </article>
         </BlurFade>
       ))} */}
-      TODO
     </div>
   );
 };
