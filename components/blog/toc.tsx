@@ -36,6 +36,9 @@ const TOC = ({
 }: React.ComponentProps<"div"> & { content: string }) => {
   const headings = getTOC(content);
 
+  if(!headings || headings.length === 0) return null
+
+
   const TOC_STYLE = `data-[level=one]:pl-0 data-[level=one]:pt-2 data-[level=one]:font-semibold
    data-[level=two]:pl-0 data-[level=two]:pt-1 data-[level=two]:font-medium
    data-[level=three]:pl-3
