@@ -104,3 +104,16 @@ export async function getPostById(id: string) {
     return null;
   }
 }
+
+export async function getPostBySlug(slug: string) {
+  try {
+    const db = createDb();
+
+    const res = await db.select().from(posts).where(eq(posts.slug, slug));
+    if (!res || res.length === 0) throw new Error(`Post not found!`);
+
+    return res[0];
+  } catch (error) {
+    throw error;
+  }
+}

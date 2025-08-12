@@ -1,0 +1,101 @@
+
+# h1标题
+## 链接自动添加下划线
+
+www.example.com, https://example.com, and contact@example.com.
+
+[JSON-LD](https://json-ld.org/)
+
+
+```markdown
+www.example.com, https://example.com, and contact@example.com.1231231232132131232131232131232131232131
+[JSON-LD](https://json-ld.org/)
+```
+
+## 图片
+![image-20231020150212819](/mdpic/image-20231020150212819.png)
+
+
+
+## 脚注
+
+A note[^1]
+A page[^2]
+
+[^1]: www.example.com.
+[^2]: contact@example.com.
+
+```markdown
+A note[^1]
+A page[^2]
+
+[^1]: www.example.com.
+[^2]: contact@example.com.
+```
+
+## 删除线
+
+~one~ or ~~two~~ tildes.
+
+```
+~one~ or ~~two~~ tildes.
+```
+
+## 表格
+
+
+| 11   | 11   | 11   |
+| ---- | ---- | ---- |
+| 11   | 11   | 11   |
+| 11   | 22   | 33   |
+
+## 任务列表
+
+* [ ] 潜水
+* [x] 摸鱼
+* [x] 跑步
+
+## 代码块
+
+```js
+const a = "111"
+console.log(a)
+const b = "111"
+console.log(b)
+```
+
+```
+const a = "111"
+console.log(a)
+const b = "111"
+console.log(b)
+```
+
+# h1标题
+## 内嵌元素
+
+2222`111`2222
+
+## 引用块
+
+> this is a ref block
+
+## 分割线
+
+---
+
+
+
+## 有序列表
+
+1. aaa
+2. bbb
+3. ccc
+
+## 无序列表
+- aaa
+- bbb
+- ccc
+
+## 强调语法
+1111**123**1111

@@ -14,11 +14,11 @@ const PostsPage = async () => {
   const posts = await getAllPosts();
 
   return (
-    <div className="mx-auto max-w-5xl px-10 pt-20">
+    <div className="mx-auto px-10 pt-20">
       {posts.length === 0 ? (
         <div>no articles</div>
       ) : (
-        <div className="w-full grid grid-cols-2 max-md:grid-cols-1 gap-10 max-md:justify-center mt-10">
+        <div className="w-2xl">
           {posts.map((post, idx) => (
             <PostItem key={post.slug} post={post} idx={idx} />
           ))}
