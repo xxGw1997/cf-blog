@@ -168,9 +168,9 @@ body {
 /*<======================= NAVBAR STLYE START  =======================>*/
 .nav-text-shadow,
 .nav-text-shadow-hover:hover {
-  text-shadow: 5px 5px 30px var(--primary), -5px -5px 30px var(--primary),
-    5px -5px 30px var(--primary), -5px 5px 30px var(--primary);
-  color: var(--primary);
+  text-shadow: 5px 5px 30px var(--accent), -5px -5px 30px var(--accent),
+    5px -5px 30px var(--accent), -5px 5px 30px var(--accent);
+  color: var(--accent);
 }
 
 /*<======================= NAVBAR STLYE END  =======================>*/

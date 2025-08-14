@@ -6,6 +6,7 @@ import React from "react";
 import { Mail, GithubIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { Fade } from "react-awesome-reveal";
+import { Button } from "./ui/button";
 
 const Intro = () => {
   return (
@@ -66,26 +67,33 @@ const Intro = () => {
       </Fade>
 
       <motion.div
-        className="flex sm:flex-row items-center justify-center gap-4 px-4 text-lg font-medium"
+        className="flex sm:flex-row items-center justify-center gap-10 px-4 text-lg font-medium"
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
           delay: 0.1,
         }}
       >
-        <Link
-          href="mailto:xxgw1997@163.com"
-          className="group bg-gray-900 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 hover:bg-gray-950 dark:bg-white/10 active:scale-105 transition"
+        <Button
+          asChild
+          variant="tag"
+          size="lg"
+          className="group flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition !px-8"
         >
-          Contact me <Mail color="#9ca3af" />
-        </Link>
-        <a
-          className="bg-gray-900 p-4 text-white flex items-center gap-2 text-[1.35rem] rounded-full focus:scale-[1.15] hover:scale-[1.15] active:scale-105 transition cursor-pointer borderBlack dark:bg-white/10 dark:text-white/60"
-          href="https://github.com/xxGw1997"
-          target="_blank"
+          <Link href="mailto:xxgw1997@163.com">
+            Contact me <Mail className="size-4 ml-3 text-foreground/60" />
+          </Link>
+        </Button>
+        <Button
+          asChild
+          variant="tag"
+          size="lg"
+          className="rounded-full flex items-center text-[1.35rem] focus:scale-[1.15] hover:scale-[1.15] active:scale-105 transition"
         >
-          <GithubIcon />
-        </a>
+          <a href="https://github.com/xxGw1997" target="_blank">
+            <GithubIcon />
+          </a>
+        </Button>
       </motion.div>
     </section>
   );

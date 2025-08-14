@@ -11,8 +11,9 @@ import {
   useTransform,
 } from "motion/react";
 
-import SectionHeading from "./section-heading";
 import { ProjectInfo, projectsData } from "@/lib/links";
+import SectionHeading from "./section-heading";
+import { Button } from "./ui/button";
 
 const Projects = () => {
   return (
@@ -20,7 +21,7 @@ const Projects = () => {
       <SectionHeading>My Projects</SectionHeading>
 
       <div>
-        {projectsData.map((project, index) => (
+        {projectsData.map((project) => (
           <ProjectCard key={project.link} {...project} />
         ))}
       </div>
@@ -92,29 +93,34 @@ const ProjectCard: React.FC<ProjectInfo> = ({
         transformStyle: "preserve-3d",
         transform,
       }}
-      className="group relative mb-3 sm:mb-8 last:mb-0 will-change-transform p-10 bg-pink-700/30 dark:bg-blue-900/60 rounded-lg"
+      className="group relative mb-3 sm:mb-8 last:mb-0 will-change-transform p-10 bg-secondary/50 rounded-lg"
     >
       <section
         style={{
           transformStyle: "preserve-3d",
           transform: "translateZ(50px)",
         }}
-        className="shadow-custom relative bg-white max-w-[42rem] border border-black/5 rounded-lg overflow-hidden sm:pr-8 hover:bg-gray-200 transition sm:group-even:pl-8 dark:text-white dark:bg-slate-700/60 dark:hover:bg-slate-700"
+        className="shadow-xl relative bg-background/90 hover:bg-background max-w-[42rem] border border-black/5 rounded-lg overflow-hidden sm:pr-8 transition sm:group-even:pl-8 "
       >
         <div className="pt-4 pb-7 px-5 sm:pl-10 sm:pr-2 sm:pt-10 sm:max-w-[65%] flex flex-col gap-y-6 h-full sm:group-even:ml-[15rem]">
           <h3 className="text-2xl font-semibold">{title}</h3>
-          <p className="mt-2 leading-relaxed text-gray-700 dark:text-white/70">
-            {description}
-          </p>
-          <ul className="flex flex-wrap mt-4 gap-2 sm:mt-auto">
-            {tags.map((tag, index) => (
-              <li
-                className="bg-black/[0.7] px-3 py-1 text-[0.7rem] uppercase tracking-wider text-white rounded-full dark:text-white/70"
-                key={index}
-              >
-                {tag}
-              </li>
-            ))}
+          <p className="mt-2 leading-relaxed">{description}</p>
+          <ul className="flex flex-wrap mt-4 gap-3 sm:mt-auto">
+            {tags.map((tag, index) => {
+              const Icon = tag.icon;
+              return (
+                <Button
+                  variant="tag"
+                  asChild
+                  className="text-[0.7rem] uppercase tracking-wider rounded-full"
+                  key={index}
+                >
+                  <li>
+                    {Icon && <Icon className="size-5 mx-1" />} {tag.label}
+                  </li>
+                </Button>
+              );
+            })}
           </ul>
         </div>
 

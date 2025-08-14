@@ -7,6 +7,7 @@ import { skillsData } from "@/lib/links";
 import { useSectionInView } from "@/hooks/useSectionInView";
 
 import SectionHeading from "./section-heading";
+import { Button } from "./ui/button";
 
 const fadeInAnimationVariants = {
   initial: {
@@ -33,22 +34,28 @@ const Skills = () => {
       className="mb-28 max-w-[53rem] scroll-t-28 text-center sm:mb-40"
     >
       <SectionHeading>My Skills</SectionHeading>
-      <ul className="flex flex-wrap justify-center gap-2 text-lg text-gray-800">
-        {skillsData.map((skill, index) => (
-          <motion.li
-            variants={fadeInAnimationVariants}
-            initial="initial"
-            whileInView="animate"
-            viewport={{
-              once: true,
-            }}
-            custom={index}
-            key={index}
-            className="bg-zinc-200 border-black rounded-xl px-5 py-3 dark:bg-white/10 dark:text-white/80"
-          >
-            {skill}
-          </motion.li>
-        ))}
+      <ul className="flex flex-wrap justify-center gap-5 text-lg">
+        {skillsData.map((skill, index) => {
+          const Icon = skill.icon;
+
+          return (
+            <motion.li
+              variants={fadeInAnimationVariants}
+              initial="initial"
+              whileInView="animate"
+              viewport={{
+                once: true,
+              }}
+              custom={index}
+              key={index}
+            >
+              <Button variant="tag" className="rounded-xl !px-5 !py-3">
+                {Icon && <Icon className="mr-1 size-5" />}
+                {skill.label}
+              </Button>
+            </motion.li>
+          );
+        })}
       </ul>
     </section>
   );
