@@ -34,7 +34,7 @@ export default function About() {
           <SectionHeading>About Me</SectionHeading>
         </Fade>
 
-        <div className="grid xl:grid-cols-2 lg:text-start">
+        <div className="grid lg:grid-cols-2 lg:text-start">
           <div className="flex-1">
             {/* Content */}
             <div className="text-lg mt-12 xl:mt-3">
@@ -112,7 +112,7 @@ export default function About() {
               </div>
             </div>
           </div>
-          <div>
+          <div className="max-lg:hidden">
             <Fade
               direction="right"
               delay={600}

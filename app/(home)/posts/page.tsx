@@ -18,7 +18,7 @@ const PostsPage = async () => {
       {posts.length === 0 ? (
         <div>no articles</div>
       ) : (
-        <div className="w-2xl">
+        <div className="w-2xl max-md:w-auto">
           {posts.map((post, idx) => (
             <PostItem key={post.slug} post={post} idx={idx} />
           ))}

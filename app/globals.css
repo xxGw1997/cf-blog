@@ -172,8 +172,14 @@ body {
     5px -5px 30px var(--accent), -5px 5px 30px var(--accent);
   color: var(--accent);
 }
-
 /*<======================= NAVBAR STLYE END  =======================>*/
+
+/*<======================= PROSE STYLE START  =======================>*/
+.prose {
+  /* 一行70个字符宽度 */
+  max-width: 70ch !important;
+}
+/*<======================= PROSE STLYE END  =======================>*/
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 15px;

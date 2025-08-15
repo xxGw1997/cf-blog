@@ -39,7 +39,7 @@ const Navs: React.FC<NavsProps> = ({ links }) => {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="md:flex items-center justify-center fixed z-[99] -mt-5"
+      className="flex items-center justify-center fixed z-[99] -mt-5 max-md:hidden"
     >
       <ul className="flex flex-wrap items-center justify-center gap-y-1 text-[1rem] font-medium rounded-full backdrop-blur-md">
         {links.map((link) => (

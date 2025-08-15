@@ -93,19 +93,19 @@ const ProjectCard: React.FC<ProjectInfo> = ({
         transformStyle: "preserve-3d",
         transform,
       }}
-      className="group relative mb-3 sm:mb-8 last:mb-0 will-change-transform p-10 bg-secondary/50 rounded-lg"
+      className="group relative mb-8 last:mb-0 will-change-transform p-10 bg-secondary/50 max-md:bg-transparent max-md:p-0 rounded-lg"
     >
       <section
         style={{
           transformStyle: "preserve-3d",
           transform: "translateZ(50px)",
         }}
-        className="shadow-xl relative bg-background/90 hover:bg-background max-w-[42rem] border border-black/5 rounded-lg overflow-hidden sm:pr-8 transition sm:group-even:pl-8 "
+        className="shadow-xs relative bg-background/90 hover:bg-background max-w-[42rem] border border-black/5 rounded-lg overflow-hidden md:pr-8 transition md:group-even:pl-8 "
       >
-        <div className="pt-4 pb-7 px-5 sm:pl-10 sm:pr-2 sm:pt-10 sm:max-w-[65%] flex flex-col gap-y-6 h-full sm:group-even:ml-[15rem]">
+        <div className="pt-4 pb-7 px-5 md:pl-10 md:pr-2 md:pt-10 md:max-w-[65%] flex flex-col gap-y-6 h-full md:group-even:ml-[15rem]">
           <h3 className="text-2xl font-semibold">{title}</h3>
           <p className="mt-2 leading-relaxed">{description}</p>
-          <ul className="flex flex-wrap mt-4 gap-3 sm:mt-auto">
+          <ul className="flex flex-wrap mt-4 gap-3 md:mt-auto">
             {tags.map((tag, index) => {
               const Icon = tag.icon;
               return (
@@ -136,7 +136,7 @@ const ProjectCard: React.FC<ProjectInfo> = ({
           onClick={() => {
             window.open(link, "_blank");
           }}
-          className="absolute hidden sm:block top-8 -right-40 rounded-t-lg shadow-2xl cursor-pointer
+          className="absolute hidden md:block top-8 -right-40 rounded-t-lg shadow-xs cursor-pointer
                      transition
                      group-even:right-[initial] group-even:-left-40"
         />

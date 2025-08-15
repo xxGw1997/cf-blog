@@ -72,6 +72,7 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ links }) => {
                   )}
                   onClick={() => {
                     setActiveSection(link.hash);
+                    setIsOpen(false);
                     setTimeOfLastClick(Date.now());
                   }}
                 >
@@ -85,7 +86,11 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ links }) => {
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
             >
-              <ThemeSwitch />
+              <ThemeSwitch
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              />
             </motion.div>
           </motion.div>
         )}
