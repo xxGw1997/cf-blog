@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { format } from "date-fns";
 import { CalendarIcon, LoaderCircleIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 
+import { useRouter } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import {
   Form,

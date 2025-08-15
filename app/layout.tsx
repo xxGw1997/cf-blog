@@ -6,6 +6,7 @@ import ThemeProvider from "@/components/providers/theme";
 import SiteLogo from "@/components/site-logo";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Toaster } from "@/components/ui/sonner";
+import NextTopLoader from "@/components/top-loader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col relative`}
       >
+        <NextTopLoader />
         <ThemeProvider>
           <Toaster />
           <SiteLogo />

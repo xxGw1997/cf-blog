@@ -79,7 +79,7 @@ const PostsPage = async () => {
                       编辑
                     </Link>
                     <Link
-                      href={`/blog/${post.slug}`}
+                      href={`/post/${post.slug}`}
                       className="text-primary hover:text-primary/80 mr-4"
                       target="_blank"
                     >

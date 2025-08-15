@@ -4,10 +4,10 @@ import PostItem from "./post-item";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - xxgw",
+    template: "my blogs - xxgw",
     default: "posts",
   },
-  description: "xxgw's blog",
+  description: "将技术上总结的经验、对于事情的感想、平时的碎碎念记录下来。",
 };
 
 const PostsPage = async () => {
