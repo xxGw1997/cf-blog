@@ -6,6 +6,7 @@ import { postFormSchema } from "@/types/schema";
 import { createDb } from "@/lib/db";
 import { posts } from "@/lib/db/schema";
 import { slugify } from "@/lib/utils";
+import { revalidateTag } from "next/cache";
 
 export type PostType = {
   id: string;
@@ -54,6 +55,8 @@ export async function createPost(formData: z.infer<typeof postFormSchema>) {
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+
+    revalidateTag("posts");
   } catch (error) {
     throw error;
   }
@@ -79,6 +82,8 @@ export async function editPost(
       updatedAt: new Date(),
     };
     await db.update(posts).set(updatedData).where(eq(posts.id, id));
+
+    revalidateTag("posts");
   } catch (error) {
     throw error;
   }
