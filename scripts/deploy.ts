@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 const PROJECT_NAME = process.env.PROJECT_NAME || "cf-blog";
 
 const REQUIRED_ENV = [
+  "NEXT_PUBLIC_BASE_URL",
   "CLOUDFLARE_ACCOUNT_ID",
   "CLOUDFLARE_API_TOKEN",
   "DATABASE_NAME",

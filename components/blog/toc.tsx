@@ -47,7 +47,7 @@ const TOC = ({
 
   return (
     <div className={cn("overflow-y-auto md:w-80 pl-5 group/toc", className)}>
-      <TableOfContents className="cursor-pointer ml-1"/>
+      <TableOfContents className="cursor-pointer ml-1 opacity-0 group-hover/toc:opacity-100 group-hover:opacity-100 transition-opacity duration-[1s]"/>
       <ul className="flex flex-col list-none pl-0 mt-0 opacity-0 group-hover/toc:opacity-100 group-hover:opacity-100 transition-opacity duration-[1s]">
         {headings.map((heading, index) => (
           <li key={index} className="m-0 text-sm">
