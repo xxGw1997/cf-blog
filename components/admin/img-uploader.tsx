@@ -11,8 +11,8 @@ export default function ImgUploader({
 }: React.ComponentProps<"div"> & {
   onFilesAdded: (addedFiles: FileWithPreview[]) => void;
 }) {
-  const maxSizeMB = 5;
-  const maxSize = maxSizeMB * 1024 * 1024; // 5MB default
+  const maxSizeMB = 2;
+  const maxSize = maxSizeMB * 1024 * 1024; // 2MB default
 
   const [
     { files, isDragging, errors },
