@@ -21,7 +21,7 @@ export type PostType = {
 };
 
 export async function createPost(formData: z.infer<typeof postFormSchema>) {
-  // TODO: Only admin can create post, check user session role
+  // TODO: Check user session role
 
   const validatedFields = postFormSchema.safeParse(formData);
   if (!validatedFields.success) {
@@ -66,6 +66,8 @@ export async function editPost(
   id: string,
   formData: z.infer<typeof postFormSchema>
 ) {
+  // TODO: Check user session role
+
   const validatedFields = postFormSchema.safeParse(formData);
   if (!validatedFields.success) {
     return {

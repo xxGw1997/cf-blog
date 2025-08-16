@@ -30,6 +30,7 @@ import { postFormSchema } from "@/types/schema";
 import { createPost, editPost } from "@/actions/post";
 import { useState } from "react";
 import { toast } from "sonner";
+import UploadDialog from "./img-upload-dialog";
 
 const CreatePostForm = ({
   formInitValue,
@@ -100,6 +101,7 @@ const CreatePostForm = ({
               </FormItem>
             )}
           />
+          <UploadDialog />
           <FormField
             control={form.control}
             name="content"

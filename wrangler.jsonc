@@ -34,6 +34,12 @@
       "database_id": "df22fed5-911f-44f0-b92a-4dbcfdb0da08",
 	    "migrations_dir": "migrations"
     }
+  ],
+  "r2_buckets": [
+    {
+      "bucket_name": "r2-blog",
+      "binding": "r2_blog"
+    }
   ]
 
   /**
