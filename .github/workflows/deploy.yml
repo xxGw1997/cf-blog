@@ -39,6 +39,7 @@ jobs:
           DATABASE_ID="${{ secrets.DATABASE_ID }}"
           DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
           NEXT_PUBLIC_BASE_URL="${{ secrets.NEXT_PUBLIC_BASE_URL }}"
+          NEXT_PUBLIC_R2_DOMAIN="${{ secrets.NEXT_PUBLIC_R2_DOMAIN }}"
 
           # Authentication configuration
 
@@ -53,6 +54,7 @@ jobs:
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
           NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          NEXT_PUBLIC_R2_DOMAIN: ${{ secrets.NEXT_PUBLIC_R2_DOMAIN }}
 
         run: pnpm dlx tsx scripts/deploy.ts
 
