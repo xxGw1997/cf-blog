@@ -38,7 +38,7 @@ const UploadDialog = () => {
       const formData = new FormData();
       formData.append("file", previewFileInfo);
 
-      const result = await uploadFile(formData);
+      const result = await uploadFile(formData, { prefix: "life" });
 
       setR2Url(result.url);
 
@@ -90,7 +90,11 @@ const UploadDialog = () => {
               <p className="text-sm break-all flex items-center gap-x-5">
                 <strong>URL:</strong>
 
-                <a className="underline text-accent" href={`https://${r2Url}`} target="_blank">{`https://${r2Url}`}</a>
+                <a
+                  className="underline text-accent"
+                  href={`https://${r2Url}`}
+                  target="_blank"
+                >{`https://${r2Url}`}</a>
 
                 <Button onClick={handleCopyUrl} size="sm" variant={"outline"}>
                   Copy
