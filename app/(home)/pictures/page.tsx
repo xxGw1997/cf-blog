@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import { getFileList } from "@/actions/file-upload";
 
 const Pictures = () => {
-  const [files, setFiles] = useState<R2Objects>();
+  const [keys, setKeys] = useState<string[]>([]);
   useEffect(() => {
     async function getFiles() {
-      const files = await getFileList();
-      setFiles(files);
+      const keys = await getFileList();
+
+      setKeys(keys);
     }
     getFiles();
   }, []);
@@ -17,12 +18,11 @@ const Pictures = () => {
   return (
     <div>
       <ul>
-        {files &&
-          files.objects.map((file, index) => (
-            <li key={index}>
-              {index + 1} : {file.key}
-            </li>
-          ))}
+        {keys.map((key, index) => (
+          <li key={index}>
+            {index + 1} : {key}
+          </li>
+        ))}
       </ul>
     </div>
   );

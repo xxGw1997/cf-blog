@@ -53,7 +53,9 @@ export async function getFileList(r2ListOptions?: R2ListOptions) {
 
     const fileList = await r2.list(r2ListOptions);
 
-    return fileList;
+    const keys = fileList.objects.map((file) => file.key);
+
+    return keys;
   } catch (error) {
     throw error;
   }
