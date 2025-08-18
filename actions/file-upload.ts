@@ -53,7 +53,9 @@ export async function getFileList(r2ListOptions?: R2ListOptions) {
 
     const fileList = await r2.list(r2ListOptions);
 
-    const keys = fileList.objects.map((file) => file.key);
+    const keys = fileList.objects.map(
+      (file) => `${process.env.NEXT_PUBLIC_R2_DOMAIN}/${file.key}`
+    );
 
     return keys;
   } catch (error) {

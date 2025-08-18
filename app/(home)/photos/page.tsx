@@ -27,7 +27,7 @@ const Photos = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [canView, setCanView] = useState(false);
-  const [keys, setKeys] = useState<string[]>([]);
+  const [links, setLinks] = useState<string[]>([]);
 
   const submit = async () => {
     setIsSubmitting(true);
@@ -53,8 +53,8 @@ const Photos = () => {
 
   useEffect(() => {
     async function getKeys() {
-      const keys = await getFileList();
-      setKeys(keys);
+      const links = await getFileList();
+      setLinks(links);
     }
     if (canView) getKeys();
   }, [canView]);
@@ -63,12 +63,12 @@ const Photos = () => {
     return (
       <div className="mx-auto px-10 pt-20">
         <Masonry>
-          {keys.map((item, index) => (
+          {links.map((link, index) => (
             <BlurFade key={index} delay={index * 0.1} inView>
               <Image
                 className="rounded-2xl"
-                src={`${process.env.NEXT_PUBLIC_R2_DOMAIN}/${item}`}
-                alt={item}
+                src={link}
+                alt={link}
                 width={500}
                 height={300}
               ></Image>
