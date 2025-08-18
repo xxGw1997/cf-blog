@@ -39,6 +39,7 @@ const Photos = () => {
         setCanView(true);
       } else {
         setCanView(false);
+        toast.error("Password is wrong!");
       }
     } catch (error) {
       toast.error("Something went wrong!");
@@ -79,7 +80,7 @@ const Photos = () => {
     );
 
   return (
-    <>
+    <div className="flex justify-center items-center">
       <Button variant="outline" onClick={() => setIsOpen(true)}>
         Enter password
       </Button>
@@ -100,7 +101,9 @@ const Photos = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setIsOpen(false)}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction onClick={submit} disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
@@ -114,7 +117,7 @@ const Photos = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </div>
   );
 };
 
