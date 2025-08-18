@@ -4,10 +4,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { Masonry } from "react-plock";
 
 import { getFileList, validatePassword } from "@/actions/file-upload";
 
-import { Masonry } from "@/components/masonry";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import {
   AlertDialog,
@@ -35,6 +35,8 @@ const Photos = () => {
       const res = await validatePassword(password);
 
       if (res) {
+        const links = await getFileList();
+        setLinks(links);
         setIsOpen(false);
         setCanView(true);
       } else {
@@ -52,19 +54,18 @@ const Photos = () => {
     setIsOpen(true);
   }, []);
 
-  useEffect(() => {
-    async function getKeys() {
-      const links = await getFileList();
-      setLinks(links);
-    }
-    if (canView) getKeys();
-  }, [canView]);
-
   if (canView)
     return (
       <div className="mx-auto px-10 pt-20">
-        <Masonry>
-          {links.map((link, index) => (
+        <Masonry
+          items={links}
+          config={{
+            columns: [1, 3, 5],
+            gap: [24, 24, 24],
+            media: [640, 768, 1024],
+            useBalancedLayout: true,
+          }}
+          render={(link, index) => (
             <BlurFade key={index} delay={index * 0.1} inView>
               <Image
                 className="rounded-2xl"
@@ -74,8 +75,8 @@ const Photos = () => {
                 height={300}
               ></Image>
             </BlurFade>
-          ))}
-        </Masonry>
+          )}
+        />
       </div>
     );
 
