@@ -18,6 +18,7 @@ const COLORS = [
   "#11eee733",
 ];
 const BackgroundLight = () => {
+
   const color_left = useMotionValue(COLORS[0]);
   const color_right = useMotionValue(COLORS[1]);
 

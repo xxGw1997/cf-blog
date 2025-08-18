@@ -89,12 +89,13 @@ const UploadDialog = () => {
             {r2Url && (
               <p className="text-sm break-all flex items-center gap-x-5">
                 <strong>URL:</strong>
-
                 <a
                   className="underline text-accent"
-                  href={`https://${r2Url}`}
+                  href={r2Url}
                   target="_blank"
-                >{`https://${r2Url}`}</a>
+                >
+                  {r2Url}
+                </a>
 
                 <Button onClick={handleCopyUrl} size="sm" variant={"outline"}>
                   Copy

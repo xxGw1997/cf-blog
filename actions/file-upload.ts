@@ -60,3 +60,11 @@ export async function getFileList(r2ListOptions?: R2ListOptions) {
     throw error;
   }
 }
+
+export async function validatePassword(password: string) {
+  if (password === process.env.NEXT_PUBLIC_PHOTOS_PASSWORD) {
+    return true;
+  } else {
+    return false;
+  }
+}

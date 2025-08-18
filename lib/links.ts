@@ -53,9 +53,13 @@ export const links: Link[] = [
     name: "Projects",
     hash: "/#projects",
   },
+  // {
+  //   name: "Playground",
+  //   hash: "/playground",
+  // },
   {
-    name: "Playground",
-    hash: "/playground",
+    name: "Photos",
+    hash: "/photos",
   },
   {
     name: "Blog",

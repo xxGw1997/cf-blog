@@ -1,6 +1,7 @@
 import { TableOfContents } from "lucide-react";
 
 import { cn, slugify } from "@/lib/utils";
+import { Highlighter } from "../magicui/highlighter";
 
 const LEVEL_ARR = ["zero", "one", "two", "three", "four", "five"] as const;
 
@@ -36,8 +37,7 @@ const TOC = ({
 }: React.ComponentProps<"div"> & { content: string }) => {
   const headings = getTOC(content);
 
-  if(!headings || headings.length === 0) return null
-
+  if (!headings || headings.length === 0) return null;
 
   const TOC_STYLE = `data-[level=one]:pl-0 data-[level=one]:pt-2 data-[level=one]:font-semibold
    data-[level=two]:pl-0 data-[level=two]:pt-1 data-[level=two]:font-medium
@@ -47,7 +47,7 @@ const TOC = ({
 
   return (
     <div className={cn("overflow-y-auto md:w-80 pl-5 group/toc", className)}>
-      <TableOfContents className="cursor-pointer ml-1 opacity-0 group-hover/toc:opacity-100 group-hover:opacity-100 transition-opacity duration-[1s]"/>
+      <TableOfContents className="cursor-pointer ml-1 opacity-0 group-hover/toc:opacity-100 group-hover:opacity-100 transition-opacity duration-[1s]" />
       <ul className="flex flex-col list-none pl-0 mt-0 opacity-0 group-hover/toc:opacity-100 group-hover:opacity-100 transition-opacity duration-[1s]">
         {headings.map((heading, index) => (
           <li key={index} className="m-0 text-sm">
@@ -55,11 +55,13 @@ const TOC = ({
               href={`#${heading.slug}`}
               data-level={heading.level}
               className={cn(
-                "inline-block cursor-pointer no-underline hover:underline underline-offset-4 decoration-primary decoration-2 opacity-70 hover:opacity-100",
+                "inline-block cursor-pointer no-underline opacity-70 hover:opacity-100",
                 TOC_STYLE
               )}
             >
-              {heading.text}
+              <Highlighter action="underline" color="#FF9800">
+                {heading.text}
+              </Highlighter>
             </a>
           </li>
         ))}
