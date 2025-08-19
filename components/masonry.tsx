@@ -1,207 +1,121 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { cn, debounce } from "@/lib/utils";
+import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 
-export type MasonryProps<T> = React.ComponentPropsWithoutRef<"div"> & {
-  items: T[];
-  render: (item: T, idx: number) => React.ReactNode;
-  config: {
-    columns: number | number[];
-    gap: number | number[];
-    media?: number[];
-    useBalancedLayout?: boolean;
-  };
-  as?: React.ElementType;
-};
-
-export function createSafeArray(data: number | number[]) {
-  return Array.isArray(data) ? data : [data];
+// 定义暴露给外部的方法类型
+export interface MasonryRef {
+  // 手动更新布局的方法
+  updateLayout: () => void;
 }
 
-export function useGridStyles(columns: number, gap: number) {
-  return useMemo(
-    () => ({
-      display: "grid",
-      alignItems: "start",
-      gridColumnGap: gap,
-      gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-    }),
-    [columns, gap]
-  );
-}
-
-export function useMediaValues(
-  medias: number[] | undefined,
-  columns: number[],
-  gap: number[]
+function caculateWidth(
+  containerDom: HTMLDivElement | null,
+  cols: number,
+  gap: number
 ) {
-  const [values, setValues] = useState({ columns: 0, gap: 1 });
+  if (!containerDom) return 0;
 
-  useEffect(() => {
-    if (!medias) {
-      setValues({ columns: columns[0], gap: gap[0] });
-      return;
-    }
+  const containerWidth = containerDom.clientWidth;
+  const totalGapWidth = (cols - 1) * gap;
 
-    const mediaQueries = medias.map((media) =>
-      window.matchMedia(`(min-width: ${media}px)`)
-    );
+  const width = (containerWidth - totalGapWidth) / cols;
 
-    const onSizeChange = () => {
-      let matches = 0;
+  return width;
+}
 
-      // 1.find current window media match index
+function setPositions(
+  containerDom: HTMLDivElement,
+  width: number,
+  cols: number,
+  gap: number
+) {
+  const nextTops = new Array<number>(cols).fill(0);
+
+  for (let i = 0; i < containerDom.children.length; i++) {
+    const child = containerDom.children[i] as HTMLElement;
+    const minTop = Math.min(...nextTops);
+    child.style.top = minTop + "px";
+    child.style.width = width + "px";
+
+    const index = nextTops.indexOf(minTop);
+
+    nextTops[index] += child.getBoundingClientRect().height + gap;
+
+    const left = index * (width + gap);
+    child.style.left = left + "px";
+  }
+
+  const containerMaxHeight = Math.max(...nextTops);
+  containerDom.style.height = containerMaxHeight + "px";
+}
+
+// 使用 forwardRef 转发 ref，让外部可以访问内部方法
+export const Masonry = forwardRef<
+  MasonryRef,
+  React.ComponentPropsWithoutRef<"div"> & {
+    cols: number[];
+    gaps: number[];
+    medias: number[];
+    items: any[];
+    render: (item: any, idx: number) => React.ReactNode;
+  }
+>(({ cols, gaps, items, medias, render, className }, ref) => {
+  const containerDiv = useRef<HTMLDivElement>(null);
+
+  const mediaQueries = medias.map((media) =>
+    window.matchMedia(`(min-width: ${media}px)`)
+  );
+  // 定义内部更新布局的方法
+  const updateLayout = () => {
+    if (containerDiv.current) {
+      let matcheIndex = 0;
+
       mediaQueries.forEach((mediaQuery) => {
-        if (mediaQuery.matches) {
-          matches++;
-        }
+        if (mediaQuery.matches) matcheIndex++;
       });
 
-      // 2.The matching columns and gap data can be found according to the index.
-      // Update Values
-      const idx = Math.min(mediaQueries.length - 1, Math.max(0, matches));
-      setValues({ columns: columns[idx], gap: gap[idx] });
-    };
+      const idx = Math.min(mediaQueries.length - 1, Math.max(0, matcheIndex));
 
-    // Initial Call
-    onSizeChange();
-
-    // Apply Listeners
-    for (const mediaQuery of mediaQueries) {
-      mediaQuery.addEventListener("change", onSizeChange);
+      const col = cols[idx];
+      const gap = gaps[idx];
+      const width = caculateWidth(containerDiv.current, col, gap);
+      setPositions(containerDiv.current, width, col, gap);
     }
+  };
+
+  // 原有自动更新逻辑保留
+  useEffect(() => {
+    updateLayout();
+
+    const handleResize = debounce(updateLayout, 150);
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      for (const mediaQuery of mediaQueries) {
-        mediaQuery.removeEventListener("change", onSizeChange);
-      }
+      window.removeEventListener("resize", handleResize);
     };
-  }, [medias, columns, gap]);
+  }, [cols, gaps, updateLayout]);
 
-  return values;
-}
-
-export function Masonry<T>({
-  items = [],
-  render,
-  config,
-  as: Component = "div",
-  ...rest
-}: MasonryProps<T>) {
-  const [heights, setHeights] = useState<Map<T, number>>(new Map());
-  const { columns, gap } = useMediaValues(
-    config.media,
-    createSafeArray(config.columns),
-    createSafeArray(config.gap)
-  );
-
-  const styles = useGridStyles(columns, gap);
-
-  if (!columns) return null;
-
-  // Choose layout strategy based on config
-  const dataColumns = config.useBalancedLayout
-    ? createBalancedColumns(items, columns, (item) => heights.get(item) ?? 0)
-    : createDataColumns(createChunks(items, columns), columns);
+  // 通过 useImperativeHandle 向外部暴露方法
+  useImperativeHandle(
+    ref,
+    () => ({
+      updateLayout, // 暴露 updateLayout 方法
+    }),
+    [cols, gaps, updateLayout]
+  ); // 依赖变化时更新暴露的方法
 
   return (
-    <Component {...rest} style={styles}>
-      {dataColumns.map((column, columnIdx) => (
-        <MasonryRow gap={gap} key={columnIdx}>
-          {column.map((item, idx) => (
-            <div
-              key={idx}
-              ref={(node) => {
-                if (node && config.useBalancedLayout) {
-                  const height = node.getBoundingClientRect().height;
-
-                  if (heights.get(item) !== height) {
-                    // Update heights state if changed, triggering re-render
-                    setTimeout(() => {
-                      setHeights((prev) => {
-                        const next = new Map(prev);
-                        next.set(item, height);
-                        return next;
-                      });
-                    }, 300);
-                  }
-                }
-              }}
-            >
-              {render(item, idx)}
-            </div>
-          ))}
-        </MasonryRow>
-      ))}
-    </Component>
-  );
-}
-
-export function MasonryRow({
-  children,
-  gap,
-}: {
-  children: React.ReactNode;
-  gap: number;
-}) {
-  return (
-    <div
-      style={{
-        display: "grid",
-        rowGap: gap,
-        gridTemplateColumns: "minmax(0, 1fr)",
-      }}
-    >
-      {children}
+    <div className={cn("w-2xl", className)}>
+      <div className="w-full relative" ref={containerDiv}>
+        {items.map((item, idx) => (
+          <div className="absolute" key={idx}>
+            {render(item, idx)}
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
+});
 
-export function createChunks<T>(data: T[] = [], columns = 3) {
-  const result = [];
-
-  for (let idx = 0; idx < data.length; idx += columns) {
-    const slice = data.slice(idx, idx + columns);
-    result.push(slice);
-  }
-
-  return result;
-}
-
-export function createDataColumns<T>(data: T[][] = [], columns = 3) {
-  const result = Array.from<T[], T[]>({ length: columns }, () => []);
-
-  for (let idx = 0; idx < columns; idx++) {
-    for (let jdx = 0; jdx < data.length; jdx += 1) {
-      if (data[jdx][idx]) {
-        result[idx].push(data[jdx][idx]);
-      }
-    }
-  }
-  return result;
-}
-
-export function createBalancedColumns<T>(
-  items: T[],
-  columns: number,
-  getHeight: (item: T) => number
-): T[][] {
-  const result = Array.from<T[], T[]>({ length: columns }, () => []);
-  const columnHeights = new Array(columns).fill(0);
-
-  // Maintain original order, but distribute to shortest column
-  for (const item of items) {
-    let shortestColumnIndex = 0;
-    let minHeight = columnHeights[0];
-
-    for (let i = 1; i < columns; i++) {
-      if (columnHeights[i] < minHeight) {
-        minHeight = columnHeights[i];
-        shortestColumnIndex = i;
-      }
-    }
-
-    result[shortestColumnIndex].push(item);
-    columnHeights[shortestColumnIndex] += getHeight(item);
-  }
-
-  return result;
-}
+// 设置组件显示名称（便于调试）
+Masonry.displayName = "Masonry";

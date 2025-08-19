@@ -19,7 +19,6 @@ const COLORS = [
 ];
 const BackgroundLight = () => {
 
-  return null
   const color_left = useMotionValue(COLORS[0]);
   const color_right = useMotionValue(COLORS[1]);
 

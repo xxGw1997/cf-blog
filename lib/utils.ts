@@ -38,3 +38,43 @@ export function formatDate(
   // 使用 date-fns 格式化日期，使用中文本地化
   return format(dateObj, formatString, { locale: zhCN });
 }
+
+/**
+ * 防抖函数
+ * @param func 需要防抖的函数
+ * @param wait 等待时间（毫秒）
+ * @param immediate 是否立即执行（true 表示先执行后等待，false 表示先等待后执行）
+ * @returns 经过防抖处理的函数
+ */
+export function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  wait: number = 500,
+  immediate: boolean = false
+): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout | null = null;
+
+  return function (...args: Parameters<T>): void {
+    // 清除已有定时器
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+
+    if (immediate) {
+      // 立即执行模式
+      const callNow = !timeout;
+      timeout = setTimeout(() => {
+        timeout = null;
+      }, wait);
+
+      if (callNow) {
+        func(...args);
+      }
+    } else {
+      // 延迟执行模式
+      timeout = setTimeout(() => {
+        func(...args);
+        timeout = null;
+      }, wait);
+    }
+  };
+}
