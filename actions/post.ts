@@ -7,6 +7,7 @@ import { createDb } from "@/lib/db";
 import { posts } from "@/lib/db/schema";
 import { slugify } from "@/lib/utils";
 import { revalidateTag } from "next/cache";
+import { checkAuth } from "./check-auth";
 
 export type PostType = {
   id: string;
@@ -22,7 +23,7 @@ export type PostType = {
 
 export async function createPost(formData: z.infer<typeof postFormSchema>) {
   // TODO: Check user session role
-
+  await checkAuth();
   const validatedFields = postFormSchema.safeParse(formData);
   if (!validatedFields.success) {
     return {
@@ -67,7 +68,7 @@ export async function editPost(
   formData: z.infer<typeof postFormSchema>
 ) {
   // TODO: Check user session role
-
+  await checkAuth();
   const validatedFields = postFormSchema.safeParse(formData);
   if (!validatedFields.success) {
     return {

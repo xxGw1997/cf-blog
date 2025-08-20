@@ -15,6 +15,13 @@
       "when": 1754635874901,
       "tag": "0001_wise_bullseye",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1755683187360,
+      "tag": "0002_black_doctor_strange",
+      "breakpoints": true
     }
   ]
 }

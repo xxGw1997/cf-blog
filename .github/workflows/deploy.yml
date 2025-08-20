@@ -38,9 +38,10 @@ jobs:
           PROJECT_NAME="${{ secrets.PROJECT_NAME }}"
           DATABASE_ID="${{ secrets.DATABASE_ID }}"
           DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
+          AUTH_SECRET="${{ secrets.AUTH_SECRET }}"
+          AUTH_RESEND_KEY="${{ secrets.AUTH_RESEND_KEY }}"
           NEXT_PUBLIC_BASE_URL="${{ secrets.NEXT_PUBLIC_BASE_URL }}"
           NEXT_PUBLIC_R2_DOMAIN="${{ secrets.NEXT_PUBLIC_R2_DOMAIN }}"
-          NEXT_PUBLIC_PHOTOS_PASSWORD="${{ secrets.NEXT_PUBLIC_PHOTOS_PASSWORD }}"
 
           # Authentication configuration
 
@@ -54,9 +55,10 @@ jobs:
           PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          AUTH_RESEND_KEY: ${{ secrets.AUTH_RESEND_KEY }}
           NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
           NEXT_PUBLIC_R2_DOMAIN: ${{ secrets.NEXT_PUBLIC_R2_DOMAIN }}
-          NEXT_PUBLIC_PHOTOS_PASSWORD: ${{ secrets.NEXT_PUBLIC_PHOTOS_PASSWORD }}
 
         run: pnpm dlx tsx scripts/deploy.ts
 

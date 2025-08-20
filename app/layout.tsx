@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 
 import ThemeProvider from "@/components/providers/theme";
@@ -36,12 +37,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col relative`}
       >
         <NextTopLoader />
-        <ThemeProvider>
-          <Toaster />
-          <SiteLogo />
-          <ThemeSwitch className="fixed right-5 top-5 hidden md:flex" />
-          {children}
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider>
+            <Toaster />
+            <SiteLogo />
+            <ThemeSwitch className="fixed right-5 top-5 hidden md:flex" />
+            {children}
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );
