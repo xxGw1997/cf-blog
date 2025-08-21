@@ -1,10 +1,12 @@
 "use server";
 
 import { createR2 } from "@/lib/r2";
+import { auth } from "@/lib/auth";
 import { checkAuth } from "./check-auth";
+import { revalidatePath } from "next/cache";
 
 type UploadFileOptions = {
-  prefix: string;
+  prefix?: string;
 };
 
 export async function uploadFile(
@@ -12,7 +14,7 @@ export async function uploadFile(
   { prefix = "" }: UploadFileOptions
 ) {
   try {
-    await checkAuth();
+    await checkAuth({ role: "admin", isRedirect: false });
 
     const file = formData.get("file") as File | null;
 
@@ -39,6 +41,8 @@ export async function uploadFile(
       },
     });
 
+    revalidatePath("/admin/upload");
+
     return {
       success: true,
       message: `File upload success~`,
@@ -52,15 +56,40 @@ export async function uploadFile(
 
 export async function getFileList(r2ListOptions?: R2ListOptions) {
   try {
+    const session = await auth();
     const r2 = createR2();
 
-    const fileList = await r2.list(r2ListOptions);
+    const role = session?.user?.role || "user";
+    const delimiter = role === "user" ? "/" : undefined;
+
+    const fileList = await r2.list({ ...r2ListOptions, delimiter });
 
     const keys = fileList.objects.map(
       (file) => `${process.env.NEXT_PUBLIC_R2_DOMAIN}/${file.key}`
     );
 
     return keys;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getFileDetailList() {
+  try {
+    await checkAuth({ role: "admin", isRedirect: false });
+
+    const r2 = createR2();
+
+    const fileList = await r2.list();
+
+    const fileDetailList: Pick<R2Object, "key" | "size" | "uploaded">[] =
+      fileList.objects.map((file) => ({
+        key: `${process.env.NEXT_PUBLIC_R2_DOMAIN}/${file.key}`,
+        size: file.size,
+        uploaded: file.uploaded,
+      }));
+
+    return fileDetailList;
   } catch (error) {
     throw error;
   }

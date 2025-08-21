@@ -78,3 +78,27 @@ export function debounce<T extends (...args: any[]) => any>(
     }
   };
 }
+
+/**
+ * 将字节数转换为易读的文件大小格式（B、kB、MB、GB、TB）
+ * @param bytes 字节数（number类型）
+ * @param decimals 保留的小数位数（默认2位）
+ * @returns 格式化后的大小字符串（如 "1.50 kB"、"2.30 MB"）
+ */
+export function formatFileSize(bytes: number, decimals: number = 2): string {
+  // 处理0字节的特殊情况
+  if (bytes === 0) return "0 B";
+
+  // 定义单位及换算系数（1024进制）
+  const units = ["B", "kB", "MB", "GB", "TB"];
+  const k = 1024;
+
+  // 计算最合适的单位索引（通过对数计算）
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  // 计算转换后的值并保留指定小数位数
+  const value = parseFloat((bytes / Math.pow(k, i)).toFixed(decimals));
+
+  // 返回格式化后的字符串（单位自动匹配）
+  return `${value} ${units[i]}`;
+}

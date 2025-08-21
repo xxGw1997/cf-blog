@@ -7,6 +7,16 @@ import {
 } from "drizzle-orm/sqlite-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 
+const roles = ["user", "admin", "root"] as const;
+
+export type Role = (typeof roles)[number];
+
+export const rolePriority: Readonly<Record<Role, number>> = {
+  user: 1,
+  admin: 10,
+  root: 100,
+} as const;
+
 export const users = sqliteTable("user", {
   id: text("id")
     .primaryKey()
@@ -15,6 +25,7 @@ export const users = sqliteTable("user", {
   email: text("email").unique(),
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
   image: text("image"),
+  role: text({ enum: roles }).default("user").notNull(),
 });
 
 export const accounts = sqliteTable(

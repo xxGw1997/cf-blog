@@ -1,12 +1,12 @@
 "use server";
 import z from "zod";
 import { eq } from "drizzle-orm";
+import { revalidateTag } from "next/cache";
 
 import { postFormSchema } from "@/types/schema";
 import { createDb } from "@/lib/db";
 import { posts } from "@/lib/db/schema";
 import { slugify } from "@/lib/utils";
-import { revalidateTag } from "next/cache";
 import { checkAuth } from "./check-auth";
 
 export type PostType = {
@@ -22,8 +22,7 @@ export type PostType = {
 };
 
 export async function createPost(formData: z.infer<typeof postFormSchema>) {
-  // TODO: Check user session role
-  await checkAuth();
+  await checkAuth({ role: "admin", isRedirect: false });
   const validatedFields = postFormSchema.safeParse(formData);
   if (!validatedFields.success) {
     return {
@@ -67,8 +66,7 @@ export async function editPost(
   id: string,
   formData: z.infer<typeof postFormSchema>
 ) {
-  // TODO: Check user session role
-  await checkAuth();
+  await checkAuth({ role: "admin", isRedirect: false });
   const validatedFields = postFormSchema.safeParse(formData);
   if (!validatedFields.success) {
     return {

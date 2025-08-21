@@ -1,11 +1,15 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { format } from "date-fns";
 import { CalendarIcon, LoaderCircleIcon } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
+import { createPost, editPost } from "@/actions/post";
+import { postFormSchema } from "@/types/schema";
 import { useRouter } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -26,11 +30,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DayTimePicker } from "@/components/day-time-picker";
-import { postFormSchema } from "@/types/schema";
-import { createPost, editPost } from "@/actions/post";
-import { useState } from "react";
-import { toast } from "sonner";
-import UploadDialog from "./img-upload-dialog";
+import ImgUploadButton from "@/components/admin/img-upload-button";
 
 const CreatePostForm = ({
   formInitValue,
@@ -101,7 +101,7 @@ const CreatePostForm = ({
               </FormItem>
             )}
           />
-          <UploadDialog />
+          <ImgUploadButton />
           <FormField
             control={form.control}
             name="content"

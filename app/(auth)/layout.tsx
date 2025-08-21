@@ -1,14 +1,9 @@
 import { ReactNode } from "react";
-import { redirect } from "next/navigation";
 
-import { auth } from "@/lib/auth";
+import { checkAuth } from "@/actions/check-auth";
 
 const AuthLayout = async ({ children }: { children: ReactNode }) => {
-  // TODO: Check user session role
-
-  const session = await auth();
-
-  if (!session?.user) redirect("/");
+  await checkAuth({ role: "admin" });
 
   return (
     <div className="flex flex-col items-center pt-20 md:pt-28 px-4 pb-32">

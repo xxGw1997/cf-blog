@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { getPostById } from "@/actions/post";
 
-import CreatePostForm from "../post-form";
+import CreatePostForm from "@/components/admin/post-form";
 
 type SearchParams = Promise<{ [key: string]: string | undefined }>;
 

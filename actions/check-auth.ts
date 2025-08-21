@@ -1,8 +1,31 @@
-import { auth } from "@/lib/auth";
+"use server";
+
 import { redirect } from "next/navigation";
 
-export async function checkAuth() {
-  const session = await auth();
+import { auth } from "@/lib/auth";
+import { Role, rolePriority } from "@/lib/db/schema";
 
-  if (!session?.user) redirect("/");
+
+
+export async function checkAuth({
+  role = "user",
+  isRedirect = true,
+}: {
+  role?: Role;
+  isRedirect?: boolean;
+}) {
+  try {
+    const session = await auth();
+    const userRole = session?.user?.role;
+
+    if (!userRole || rolePriority[userRole] < rolePriority[role]) {
+      if (isRedirect) redirect("/");
+      else
+        throw new Error(
+          `Sorry, you don't have permission to perform this operation.`
+        );
+    }
+  } catch (error) {
+    throw error;
+  }
 }

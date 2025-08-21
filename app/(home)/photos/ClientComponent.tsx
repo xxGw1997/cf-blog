@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 import { getFileList } from "@/actions/file-upload";
 
@@ -13,7 +12,6 @@ import { BlurFade } from "@/components/magicui/blur-fade";
 
 export default function Photos() {
   const { data: session } = useSession();
-  const router = useRouter();
   const [links, setLinks] = useState<string[]>([]);
 
   const masonryRef = useRef<MasonryRef>(null);
@@ -27,13 +25,8 @@ export default function Photos() {
         toast.error("Something went wrong!");
       }
     }
-    if (!session?.user) {
-      toast.error("Please login to access photoes!");
-      router.push("/");
-    } else {
-      getLinks();
-    }
-  }, [session, router]);
+    getLinks();
+  }, [session]);
 
   return (
     <div className="px-7 pt-20">

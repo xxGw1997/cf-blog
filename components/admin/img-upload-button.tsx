@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { Loader2, Upload } from "lucide-react";
@@ -8,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { FileWithPreview } from "@/hooks/use-file-upload";
 import { uploadFile } from "@/actions/file-upload";
 
-const UploadDialog = () => {
+const ImgUploadButton = () => {
   const [previewFileInfo, setPreviewFileInfo] = useState<File | null>(null);
   const [r2Url, setR2Url] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -38,7 +40,7 @@ const UploadDialog = () => {
       const formData = new FormData();
       formData.append("file", previewFileInfo);
 
-      const result = await uploadFile(formData, { prefix: "life" });
+      const result = await uploadFile(formData, { prefix: "" });
 
       setR2Url(result.url);
 
@@ -109,4 +111,4 @@ const UploadDialog = () => {
   );
 };
 
-export default UploadDialog;
+export default ImgUploadButton;
