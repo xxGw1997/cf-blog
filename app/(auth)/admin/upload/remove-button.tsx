@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import { Loader2, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 import { useConfirm } from "@/hooks/use-confirm";
 import { Button } from "@/components/ui/button";
+import { removeFile } from "@/actions/file-upload";
 
 const RemoveFileButton = ({ url }: { url: string }) => {
   const [removing, setRemoving] = useState(false);
@@ -19,9 +21,9 @@ const RemoveFileButton = ({ url }: { url: string }) => {
     if (!ok) return;
 
     try {
-      // TODO REMOVE File
       setRemoving(true);
-      await new Promise((r) => setTimeout(r, 1000));
+      const res = await removeFile(url);
+      if (res) toast.success(res);
     } catch (error) {
       throw error;
     } finally {

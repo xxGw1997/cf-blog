@@ -2,7 +2,6 @@ import Link from "next/link";
 import { format } from "date-fns";
 
 import ImgUploadButton from "@/components/admin/img-upload-button";
-import { Button } from "@/components/ui/button";
 import { formatFileSize } from "@/lib/utils";
 import { getFileDetailList } from "@/actions/file-upload";
 import ZoomInImageButton from "./zoom-in-image-button";

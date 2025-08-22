@@ -3,11 +3,13 @@
 import { createR2 } from "@/lib/r2";
 import { auth } from "@/lib/auth";
 import { checkAuth } from "./check-auth";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 type UploadFileOptions = {
   prefix?: string;
 };
+
+const r2DoMain = process.env.NEXT_PUBLIC_R2_DOMAIN as string;
 
 export async function uploadFile(
   formData: FormData,
@@ -46,7 +48,7 @@ export async function uploadFile(
     return {
       success: true,
       message: `File upload success~`,
-      url: `${process.env.NEXT_PUBLIC_R2_DOMAIN}/${sanitizedFilename}`,
+      url: `${r2DoMain}/${sanitizedFilename}`,
       filename: sanitizedFilename,
     };
   } catch (error) {
@@ -84,12 +86,35 @@ export async function getFileDetailList() {
 
     const fileDetailList: Pick<R2Object, "key" | "size" | "uploaded">[] =
       fileList.objects.map((file) => ({
-        key: `${process.env.NEXT_PUBLIC_R2_DOMAIN}/${file.key}`,
+        key: `${r2DoMain}/${file.key}`,
         size: file.size,
         uploaded: file.uploaded,
       }));
 
     return fileDetailList;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function removeFile(url: string) {
+  try {
+    await checkAuth({ role: "admin", isRedirect: false });
+
+    const r2 = createR2();
+
+    const parsedUrl = new URL(url);
+    const key = parsedUrl.pathname.substring(1);
+
+    const fileFromR2 = await r2.head(key);
+
+    if (!fileFromR2) throw new Error(`file "${key}" not found!`);
+
+    await r2.delete(fileFromR2.key);
+
+    revalidatePath("/admin/upload");
+
+    return "Delete success";
   } catch (error) {
     throw error;
   }
