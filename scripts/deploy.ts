@@ -14,6 +14,7 @@ const REQUIRED_ENV = [
   "AUTH_TRUST_HOST",
   "DATABASE_NAME",
   "DATABASE_ID",
+  "R2_PRIVATE_PREFIX",
 ] as const;
 
 /**

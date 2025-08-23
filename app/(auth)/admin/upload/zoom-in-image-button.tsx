@@ -23,12 +23,12 @@ const ZoomInImageButton = ({ url }: { url: string }) => {
         </DialogTrigger>
         <DialogContent className="md:max-w-1/2">
           <DialogTitle></DialogTitle>
-          <div className="flex items-center justify-center">
+          <div className="max-w-[800px] max-h-[800px]">
             <Image
               src={url}
               alt={url}
-              height={400}
-              width={400}
+              height={750}
+              width={750}
               className="object-contain"
             />
           </div>

@@ -7,19 +7,23 @@ import { Loader2, Upload } from "lucide-react";
 import ImgUploader from "@/components/admin/img-uploader";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { FileWithPreview } from "@/hooks/use-file-upload";
 import { uploadFile } from "@/actions/file-upload";
+import { Label } from "../ui/label";
 
 const ImgUploadButton = () => {
   const [previewFileInfo, setPreviewFileInfo] = useState<File | null>(null);
   const [r2Url, setR2Url] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isPublic, setIsPublic] = useState(true);
 
   const onClose = () => {
     setPreviewFileInfo(null);
     setR2Url("");
     setIsOpen(false);
+    setIsPublic(true)
   };
 
   const onFilesAdded = (files: FileWithPreview[]) => {
@@ -40,7 +44,7 @@ const ImgUploadButton = () => {
       const formData = new FormData();
       formData.append("file", previewFileInfo);
 
-      const result = await uploadFile(formData, { prefix: "" });
+      const result = await uploadFile(formData, { isPublic });
 
       setR2Url(result.url);
 
@@ -72,6 +76,16 @@ const ImgUploadButton = () => {
           <DialogTitle>Image Upload</DialogTitle>
           <div className="flex flex-col gap-8">
             <ImgUploader className="h-96" onFilesAdded={onFilesAdded} />
+            <div className="flex gap-4 items-center">
+              <Switch
+                id="upload_public_switch"
+                checked={isPublic}
+                onCheckedChange={setIsPublic}
+              />
+              <Label className="text-sm" htmlFor="upload_public_switch">
+                所有人可见
+              </Label>
+            </div>
             <Button
               onClick={handleUpload}
               disabled={isUploading || !previewFileInfo}

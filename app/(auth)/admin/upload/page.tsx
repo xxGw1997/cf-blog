@@ -2,8 +2,8 @@ import Link from "next/link";
 import { format } from "date-fns";
 
 import ImgUploadButton from "@/components/admin/img-upload-button";
-import { formatFileSize } from "@/lib/utils";
 import { getFileDetailList } from "@/actions/file-upload";
+import { formatBytes } from "@/lib/utils";
 import ZoomInImageButton from "./zoom-in-image-button";
 import RemoveFileButton from "./remove-button";
 
@@ -55,7 +55,7 @@ const UploadPage = async () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <ZoomInImageButton url={file.key} />
                   </td>
-                  <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap">
+                  <td className="text-muted-foreground px-6 py-4 text-sm whitespace-nowrap max-w-lg overflow-hidden text-ellipsis">
                     <Link
                       href={file.key}
                       target="_blank"
@@ -65,13 +65,13 @@ const UploadPage = async () => {
                     </Link>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-xs">
-                    {formatFileSize(file.size)}
+                    {formatBytes(file.size)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-xs">
                     {format(file.uploaded, "yyyy年M月d日 HH:mm:ss")}
                   </td>
                   <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                    <RemoveFileButton url={file.key}/>
+                    <RemoveFileButton url={file.key} />
                   </td>
                 </tr>
               ))
