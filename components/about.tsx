@@ -57,9 +57,8 @@ export default function About() {
                 >
                   <p className="mt-2 leading-relaxed text-sm text-gray-700 dark:text-white/70">
                     My dream is to live an ordinary life. Although I don't have
-                    exceptional programming talents, I firmly believe that
-                    through my unremitting efforts, I can also create some
-                    amazing works.
+                    exceptional programming talents, I firmly believe that I can also create some
+                    amazing works through my unremitting efforts, 
                   </p>
                 </Fade>
                 <Fade
