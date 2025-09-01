@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
-import { LogOut, UserRoundIcon } from "lucide-react";
+import { LogOut, UserRoundIcon, UserStar } from "lucide-react";
 
 import LoginForm from "@/components/auth/login-form";
 import {
@@ -17,8 +17,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { Role } from "@/lib/db/schema";
+import Link from "next/link";
 
 export function LoginButton() {
   const [open, setOpen] = useState(false);
@@ -53,9 +56,11 @@ export function LoginButton() {
 export function UserButton({
   image,
   fallback,
+  role,
 }: {
   image: string | null | undefined;
   fallback: string;
+  role: Role;
 }) {
   return (
     <DropdownMenu>
@@ -66,6 +71,15 @@ export function UserButton({
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="" align="start">
+        {role !== "user" && (
+          <DropdownMenuItem>
+            <Link href="/admin" className="flex">
+              <UserStar className="mr-2 h-4 w-4" />
+              Dashboard
+            </Link>
+          </DropdownMenuItem>
+        )}
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>
           <LogOut className="mr-2 h-4 w-4" />
           Log out
@@ -84,6 +98,7 @@ export function AuthButton() {
         <UserButton
           image={session.user.image}
           fallback={session.user.email ?? "ME"}
+          role={session.user.role}
         />
       ) : (
         <LoginButton />

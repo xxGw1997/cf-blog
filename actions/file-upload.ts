@@ -1,19 +1,15 @@
 "use server";
+import { revalidatePath } from "next/cache";
 
 import { createR2 } from "@/lib/r2";
 import { auth } from "@/lib/auth";
 import { checkAuth } from "./check-auth";
-import { revalidatePath, revalidateTag } from "next/cache";
-
-type UploadFileOptions = {
-  prefix?: string;
-};
 
 const r2DoMain = process.env.NEXT_PUBLIC_R2_DOMAIN as string;
 
 export async function uploadFile(
   formData: FormData,
-  { prefix = "" }: UploadFileOptions
+  { isPublic }: { isPublic: boolean }
 ) {
   try {
     await checkAuth({ role: "admin", isRedirect: false });
@@ -23,7 +19,11 @@ export async function uploadFile(
     if (!file || file.size === 0)
       throw new Error("No file to upload, please select a file!");
 
-    const sanitizedFilename = `${prefix ? prefix + "/" : ""}${file.name.replace(
+    const prefix = isPublic
+      ? ""
+      : `${process.env.R2_PRIVATE_PREFIX as string}/`;
+
+    const sanitizedFilename = `${prefix}${file.name.replace(
       /[^a-zA-Z0-9.-]/g,
       "-"
     )}`;

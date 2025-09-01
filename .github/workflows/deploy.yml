@@ -41,6 +41,7 @@ jobs:
           AUTH_SECRET="${{ secrets.AUTH_SECRET }}"
           AUTH_RESEND_KEY="${{ secrets.AUTH_RESEND_KEY }}"
           AUTH_TRUST_HOST="${{ secrets.AUTH_TRUST_HOST }}"
+          R2_PRIVATE_PREFIX="${{ secrets.R2_PRIVATE_PREFIX }}"
           NEXT_PUBLIC_BASE_URL="${{ secrets.NEXT_PUBLIC_BASE_URL }}"
           NEXT_PUBLIC_R2_DOMAIN="${{ secrets.NEXT_PUBLIC_R2_DOMAIN }}"
 
@@ -59,6 +60,7 @@ jobs:
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
           AUTH_RESEND_KEY: ${{ secrets.AUTH_RESEND_KEY }}
           AUTH_TRUST_HOST: ${{ secrets.AUTH_TRUST_HOST }}
+          R2_PRIVATE_PREFIX: ${{ secrets.R2_PRIVATE_PREFIX }}
           NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
           NEXT_PUBLIC_R2_DOMAIN: ${{ secrets.NEXT_PUBLIC_R2_DOMAIN }}
 
