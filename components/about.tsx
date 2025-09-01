@@ -106,7 +106,7 @@ export default function About() {
                     Now I realize the importance of English, so in the coming
                     years, I plan to master it and hope to be able to
                     communicate fluently with others in English.Although it will
-                    be difficult,But I will keep going.
+                    be difficult,I will keep going.
                   </p>
                 </Fade>
               </div>
